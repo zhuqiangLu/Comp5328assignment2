@@ -2,6 +2,16 @@ import numpy as np
 import torch
 
 
+def sigmoid_loss_labels_embedding(labels, num_classes):
+
+    base = -1 * torch.ones((labels.shape[0], num_classes))
+    
+    one_hot = 2 * one_hot_embedding(labels, num_classes)
+
+    return base + one_hot
+
+
+
 # Embedding labels to one-hot form.
 def one_hot_embedding(labels, num_classes):
     r"""Embedding labels to one-hot form.
@@ -24,7 +34,9 @@ def accuracy(output, target, topk=(1,)):
     batch_size = target.size(0)
 
     _, pred = output.topk(maxk, 1, True, True)
+    
     pred = pred.t()
+    
     correct = pred.eq(target.view(1, -1).expand_as(pred))
 
     res = []
@@ -49,3 +61,10 @@ class AverageMeter(object):
         self.sum += val * num
         self.count += num
         self.avg = self.sum / self.count
+
+
+
+if __name__ == "__main__":
+    
+    y = torch.Tensor([2,0,1,1,0]).long()
+    print(sigmoid_loss_labels_embedding(y, 3))

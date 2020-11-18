@@ -13,10 +13,14 @@ def get_loader(path, batch_size=4, split_ratio=0.8):
     Xtr_val = dataset["Xtr"]
     Str_val = dataset["Str"]
 
+   
     # test data
     Xts = dataset["Xts"]
     Yts = dataset["Yts"]
 
+    # reshape each as (c, w, h) 
+    Xtr_val = Xtr_val.reshape(Xtr_val.shape[0], -1, Xtr_val.shape[-2], Xtr_val.shape[-1])
+    Xts = Xts.reshape(Xts.shape[0], -1, Xts.shape[-2], Xts.shape[-1])
     # print(Xtr_val.shape)
     # print(Str_val.shape)
     # print(Xts.shape)
@@ -65,3 +69,4 @@ if __name__ == "__main__":
     trainloader, valloader, testloader = get_loader("../datasets/FashionMNIST0.5.npz")
     for i, data in enumerate(trainloader):
         print(data[1])
+        break
