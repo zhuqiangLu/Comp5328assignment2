@@ -149,5 +149,9 @@ if __name__ == "__main__":
     print(test_l)
     print("mean : {}, std: {}".format(np.mean(test_l), np.std(test_l)))
 
+    # python run.py --dataset=mnist05 --loss=ce  --weight_decay=0.3  --iters=10 --epoch=20
+    # python run.py --dataset=mnist05 --loss=ce  --weight_decay=0.3  --iters=10 --epoch=20 --forward=True --given_flip_rate=True
+    # python run.py --dataset=mnist05 --loss=sce  --weight_decay=0.3  --iters=10 --epoch=20 
+
     
 
