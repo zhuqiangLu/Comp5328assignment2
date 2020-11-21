@@ -91,6 +91,7 @@ def get_MNIST_05(transform=None, path=None, batch_size=128):
     if transform is None:
 
         transform = transforms.Compose([
+            transforms.Resize((32, 32)),
             transforms.RandomHorizontalFlip(p=0.5),
             transforms.ToTensor(),
             transforms.Normalize((0.5), (0.5)),
@@ -119,7 +120,7 @@ def get_MNIST_06(transform=None, path=None, batch_size=128):
     if transform is None:
 
         transform = transforms.Compose([
-            transforms.Resize((28, 28)),
+            transforms.Resize((32, 32)),
             transforms.RandomHorizontalFlip(p=0.5),
             transforms.ToTensor(),
             transforms.Normalize((0.5), (0.5)),
@@ -143,6 +144,7 @@ def get_CIFAR(transform=None, path=None, batch_size=128):
 
     if transform is None:
         transform = transforms.Compose([
+            transforms.Resize((32, 32)),
             transforms.RandomHorizontalFlip(p=0.5),
             transforms.ToTensor(),
             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))

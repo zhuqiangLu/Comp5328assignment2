@@ -5,9 +5,9 @@ import torch.nn as nn
 from estimator import Estimator, DT_Estimator
 from loss import SCE, CE
 from torchvision import transforms
-from network import FCNet 
+from network import FCNet, Backbone
 import argparse
-
+import numpy as np
 parser = argparse.ArgumentParser()
 
 parser.add_argument('--loss', type=str,
@@ -32,13 +32,15 @@ parser.add_argument('--lr', type=float, default=0.0003, help='learning rate')
 parser.add_argument('--weight_decay',type=float, 
                     default=0.3, help="regularizaiton weight")
 
+parser.add_argument('--iters',type=int, 
+                    default=10)
 
 
 
 def train_by_arg(args):
 
-    net = FCNet(28*28, 3, None).cuda()
-   
+    
+    num_channel = 1
     if args.dataset == 'mnist05':
         print("dataset: mmnist0.5")
         trainloader, valloader, testloader, transition_matrix = get_MNIST_05()
@@ -50,11 +52,12 @@ def train_by_arg(args):
     elif args.dataset == "cifar":
         print("dataset: cifar")
         trainloader, valloader, testloader, transition_matrix = get_CIFAR()
-        
+        num_channel=3
     else:
         print("dataset: mnist0.5 when input dataset is not recognise")
         trainloader, valloader, testloader, transition_matrix = get_MNIST_05()
-   
+    
+    net = Backbone(num_channel, 3, None).cuda()
 
     if not args.given_flip_rate:
         print("no given flip rate")
@@ -131,11 +134,20 @@ def train_by_arg(args):
 
     y_accu = test(net, testloader)
     print("test accuracy: {:.2f}".format(y_accu))
+    return y_accu
 
 
 
 if __name__ == "__main__":
     args = parser.parse_args()
-    print(args)
-    train_by_arg(args)
+
+    test_accu = []
+    for i in range(args.iters):
+        test_accu.append(train_by_arg(args))
+
+    test_l = np.array(test_accu)
+    print(test_l)
+    print("mean : {}, std: {}".format(np.mean(test_l), np.std(test_l)))
+
+    
 

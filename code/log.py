@@ -14,7 +14,10 @@
 
 
 # mnist 06 not given flip rate, not estimate ce
-[ 89.97, 89.07, 89.67, 90.53, 88.97]
+[ 84.20, 84.23, 84.67, 82.67, 85.33]
+
+# mnist 06, with flip rate, forward learning
+[84.87,  84.00, 84.10, 89.83, 89.50]
 
 
-[89.90,  89.17, 89.80, 89.83, 89.50]
+# mnist 05, no flip rate, sce

@@ -1,12 +1,7 @@
 import torch
-from utils import one_hot_embedding, accuracy, AverageMeter
-import torch.nn.functional as F
-from network import FCNet #CONVNet
-from data import get_loader
+from utils import accuracy, AverageMeter
+from network import FCNet 
 import torch.nn as nn
-from estimator import Estimator, DT_Estimator
-from loss import SCE, CE
-from torchvision import transforms
 
 def test(net, testloader, estimate_flip_rate=None, onGPU=True):
 
