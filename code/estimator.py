@@ -20,7 +20,7 @@ class Estimator():
         self.preds = None
 
     def get_flip_rate(self):
-
+        print(self.preds.shape)
         num_class = self.preds.shape[-1]
 
         flip_rate = np.zeros((num_class, num_class))
@@ -29,10 +29,9 @@ class Estimator():
             flip_rate[:, i] = self.preds[self.preds[:, i].argsort()][-1].T
         
         return torch.from_numpy(flip_rate).float()
+        
 
-
-
-
+   
 class DT_Estimator():
 
     def __init__(self):
@@ -43,9 +42,9 @@ class DT_Estimator():
 
         
         if self.preds is None:
-            self.preds = F.softmax(preds, dim=1).cpu().data.numpy()
+            self.preds = preds.cpu().data.numpy()
         else:
-            self.preds = np.vstack((self.preds, F.softmax(preds, dim=1).cpu().data.numpy()))
+            self.preds = np.vstack((self.preds, preds.cpu().data.numpy()))
 
         if self.noise_label is None:
             self.noise_label =noise_label.cpu().data.numpy()
